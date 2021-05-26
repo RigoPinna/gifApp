@@ -9,7 +9,7 @@ export const AppRouter = () => {
     
 
     return (
-             <BrowserRouter>
+             <BrowserRouter basename={process.env.PUBLIC_URL}>
                
                     <Switch>
                     <Route exact path="/favorites" component={ GifFavorite } />

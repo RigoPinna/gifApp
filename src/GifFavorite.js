@@ -1,10 +1,11 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { GifGridItem } from './components/GifGridItem';
 import { NavBar } from './components/NavBar'
 import { GifContext } from './contextGif/GifContext';
 
 export const GifFavorite = ( ) => {
-    const { gifFavorite } = useContext( GifContext );
+    const  [ gifFavorites ] = useContext( GifContext );
+    console.log( gifFavorites)
 
     return (
         <>
@@ -12,7 +13,7 @@ export const GifFavorite = ( ) => {
         <div className="wrapperApp">
             <h1>Mis gifs favoritos</h1>
             <div className="card-grid">
-                { gifFavorite.map( ( gif ) => {
+                { gifFavorites.map( ( gif ) => {
                     return <GifGridItem key={ gif.id } {...gif}/>
                 })
                 }

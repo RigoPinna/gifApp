@@ -1,17 +1,12 @@
 import React from 'react'
 import { Redirect, Switch, BrowserRouter, Route } from 'react-router-dom';
+import ReactGA from 'react-ga';
+
 import GifExperApp from '../GifExpertApp';
 import { GifFavorite } from '../GifFavorite';
-import ReactGA from 'react-ga';
 
 
 export const AppRouter = () => {
-    ReactGA.initialize('G-YBM4R832NX'); // Aqui pones tu identificador de cuenta de Google Analytics
-    ReactGA.event({
-        category: 'Usuario',
-        action: 'Cuenta creada'
-    });
-    history.listen(location => ReactGA.pageview(location.pathname));
 
     return (
              <BrowserRouter basename={process.env.PUBLIC_URL}>

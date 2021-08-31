@@ -1,17 +1,13 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { GifContext } from './contextGif/GifContext'
+import { gifReducer, initialState } from './contextGif/gifReducer';
 import { AppRouter } from './router/AppRouter'
 
 export const MainApp = () => {
    
-    const [gifFavorite, setGifFavorite] = useState([]);
-    useEffect(() => {
-        const myGifs = localStorage.getItem('myGifs') ? JSON.parse(localStorage.getItem('myGifs')) : [];
-        localStorage.setItem('myGifs',JSON.stringify(myGifs))
-        setGifFavorite(myGifs)
-    }, [])
+    const [ gifFavorites, dispatch ] = useReducer( gifReducer,   initialState );
     return (
-        <GifContext.Provider value= { { gifFavorite, setGifFavorite } }>
+        <GifContext.Provider value= { [ gifFavorites, dispatch ] }>
             <AppRouter />
         </GifContext.Provider>
     )

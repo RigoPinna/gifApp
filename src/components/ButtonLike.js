@@ -1,19 +1,25 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { GifContext } from '../contextGif/GifContext';
+import { addGif, removeGif } from '../contextGif/gifReducer';
 
 export const ButtonLike = ( { url, title, id: idRecived } ) => {
-    const { gifFavorite, setGifFavorite } = useContext( GifContext );
+    const [ gifFavorites, dispatch ] = useContext( GifContext );
     
-    const [ isBtnActiveFav, setBtnActive ] = useState( true );
+    const [ isBtnActiveFav, setBtnActive ] = useState( false );
 
     useEffect( () => {
-        setBtnActive( !isBtnActiveFav );
-    }, [ gifFavorite ] );
+        if ( gifFavorites.length > 0 ) {
+            const isFavorite = gifFavorites.some( gif => gif.id === idRecived );
+            setBtnActive( isFavorite );
+        }
+    }, [ gifFavorites ] );
 
     const handleLike = () => {
-        localStorage.setItem('myGifs',JSON.stringify([...gifFavorite, ...[ {id:idRecived, url, title } ]]));
-        setGifFavorite([...gifFavorite, ...[ {id:idRecived, url, title } ]])
-        setBtnActive(true);
+        const isAdded = gifFavorites.some( gif => gif.id === idRecived );
+        ( isAdded ) 
+            ? dispatch(removeGif( idRecived ))
+            : dispatch( addGif(idRecived, title, url ) );
+        setBtnActive( !isBtnActiveFav );
        
     }
     return (
